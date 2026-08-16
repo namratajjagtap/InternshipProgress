@@ -1,4 +1,4 @@
-// Single source of structured content for topics, trainings, and tasks.
+// Single source of structured content for topics and trainings.
 export const internshipMeta = {
   title: 'Internship Learning Portfolio',
   internName: 'Your Name',
@@ -80,21 +80,3 @@ export const trainings = [
   }
 ]
 
-// Small implementation tasks completed and tracked for progress.
-export const smallTasks = [
-  {
-    title: 'Build Reusable Card Component',
-    whatIDid: 'Created a generic card with heading, metadata, and body slots.',
-    outcome: 'Reduced duplicate markup in three sections.'
-  },
-  {
-    title: 'Add Mobile Sidebar Behavior',
-    whatIDid: 'Implemented collapsible panel and controlled open/close state.',
-    outcome: 'Improved mobile navigation and reduced clutter.'
-  },
-  {
-    title: 'Create Topic Detail Route',
-    whatIDid: 'Connected sidebar topics to dynamic route pages.',
-    outcome: 'Enabled focused content exploration by topic.'
-  }
-]

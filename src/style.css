@@ -262,43 +262,6 @@ body {
   color: var(--text);
 }
 
-.timeline {
-  display: grid;
-  gap: 0.8rem;
-}
-
-.timeline__item {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 0.9rem 1rem;
-  transition: border-color 170ms ease, transform 170ms ease;
-}
-
-.timeline__item:hover {
-  border-color: var(--ocean-500);
-  transform: translateY(-2px);
-}
-
-.timeline__meta {
-  margin: 0;
-  color: var(--ocean-600);
-  font-size: 0.85rem;
-}
-
-.timeline__item h3 {
-  margin: 0.35rem 0;
-  color: var(--ocean-700);
-}
-
-.timeline__item p {
-  margin: 0;
-  color: var(--muted);
-}
-
 @keyframes enter-up {
   from {
     opacity: 0;

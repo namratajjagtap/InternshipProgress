@@ -13,9 +13,7 @@ const pageTitle = computed(() => {
   const routeTitleMap = {
     '/': 'Home',
     '/about': 'About Me',
-    '/trainings': 'Trainings',
-    '/learnings': 'Daily Learnings',
-    '/tasks': 'Small Tasks'
+    '/trainings': 'Trainings'
   }
 
   if (route.path.startsWith('/topic/')) {

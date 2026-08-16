@@ -21,7 +21,7 @@ const recentTopics = topics.slice(0, 3)
 
     <div class="card-grid">
       <InfoCard title="Days Completed" :meta="`${internshipMeta.daysCompleted} days`">
-        <p>Consistent daily learning with practical coding tasks and feedback loops.</p>
+        <p>Consistent learning progress with practical coding work and feedback loops.</p>
       </InfoCard>
 
       <InfoCard title="Current Role" :meta="internshipMeta.role">

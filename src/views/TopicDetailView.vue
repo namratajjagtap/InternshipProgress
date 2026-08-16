@@ -37,7 +37,7 @@ const topic = computed(() => topics.find((item) => item.id === route.params.id))
     <article v-else class="detail-card">
       <h3>Topic Not Found</h3>
       <p>The selected topic does not exist in the current dataset.</p>
-      <BaseButton label="Back to Learnings" variant="secondary" />
+      <BaseButton label="Back to Learning Topics" variant="secondary" />
     </article>
   </section>
 </template>
