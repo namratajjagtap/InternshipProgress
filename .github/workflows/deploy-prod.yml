@@ -28,6 +28,29 @@ jobs:
       - name: Build app
         run: npm run build
 
+      - name: Debug OIDC token claims (temporary)
+        run: |
+          echo "repository=${{ github.repository }}"
+          echo "ref=${{ github.ref }}"
+
+          TOKEN_RESPONSE=$(curl -sS -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.amazonaws.com")
+          ID_TOKEN=$(echo "$TOKEN_RESPONSE" | jq -r '.value')
+          export ID_TOKEN
+
+          python - <<'PY'
+import base64
+import json
+import os
+
+token = os.environ.get("ID_TOKEN", "")
+payload_b64 = token.split('.')[1]
+payload_b64 += '=' * (-len(payload_b64) % 4)
+payload = json.loads(base64.urlsafe_b64decode(payload_b64).decode())
+print(f"oidc.sub={payload.get('sub')}")
+print(f"oidc.aud={payload.get('aud')}")
+print(f"oidc.iss={payload.get('iss')}")
+PY
+
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
