@@ -37,19 +37,7 @@ jobs:
           ID_TOKEN=$(echo "$TOKEN_RESPONSE" | jq -r '.value')
           export ID_TOKEN
 
-          python - <<'PY'
-import base64
-import json
-import os
-
-token = os.environ.get("ID_TOKEN", "")
-payload_b64 = token.split('.')[1]
-payload_b64 += '=' * (-len(payload_b64) % 4)
-payload = json.loads(base64.urlsafe_b64decode(payload_b64).decode())
-print(f"oidc.sub={payload.get('sub')}")
-print(f"oidc.aud={payload.get('aud')}")
-print(f"oidc.iss={payload.get('iss')}")
-PY
+          python -c "import base64,json,os; token=os.environ.get('ID_TOKEN',''); payload_b64=token.split('.')[1]; payload_b64 += '=' * (-len(payload_b64) % 4); payload=json.loads(base64.urlsafe_b64decode(payload_b64).decode()); print(f\"oidc.sub={payload.get('sub')}\"); print(f\"oidc.aud={payload.get('aud')}\"); print(f\"oidc.iss={payload.get('iss')}\")"
 
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
