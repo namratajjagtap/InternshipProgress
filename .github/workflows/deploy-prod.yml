@@ -1,4 +1,4 @@
-name: Deploy Vue to S3 + CloudFront
+name: Deploy Vue to S3
 
 on:
   push:
@@ -47,16 +47,3 @@ jobs:
             --exclude "assets/*" \
             --cache-control "no-cache,no-store,must-revalidate"
 
-      - name: Invalidate CloudFront through Lambda
-        run: |
-          payload=$(jq -nc \
-            --arg did "${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}" \
-            '{distributionId:$did,paths:["/","/index.html"]}')
-
-          aws lambda invoke \
-            --function-name "${{ vars.CF_INVALIDATOR_LAMBDA }}" \
-            --payload "$payload" \
-            --cli-binary-format raw-in-base64-out \
-            response.json
-
-          cat response.json
