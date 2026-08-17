@@ -147,6 +147,12 @@ body {
   transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
 }
 
+.side-nav__empty {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .side-nav__link:hover,
 .side-nav__topic:hover,
 .side-nav__link.router-link-active,
@@ -180,6 +186,9 @@ body {
 }
 
 .page__actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
   margin-top: 0.9rem;
 }
 
@@ -193,6 +202,10 @@ body {
 }
 
 .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   border-radius: 10px;
   font-weight: 700;
   border: 1px solid var(--line);
@@ -303,6 +316,12 @@ body {
   margin: 0;
   color: #ab1f1f;
   font-weight: 600;
+}
+
+.topic-form__success {
+  margin: 0;
+  color: var(--ocean-700);
+  font-weight: 700;
 }
 
 .topic-form__saving {

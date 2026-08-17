@@ -1,20 +1,29 @@
 <script setup>
 // Dynamic topic page resolves details from route param and shared topic data.
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { RouterLink } from 'vue-router'
 import BaseButton from '../components/BaseButton.vue'
 import { useTopics } from '../composables/useTopics'
 
 const route = useRoute()
-const { topics } = useTopics()
+const { topics, isLoadingTopics, ensureLoaded } = useTopics()
 
 const topic = computed(() => topics.value.find((item) => item.id === route.params.id))
+
+onMounted(() => {
+  ensureLoaded()
+})
 </script>
 
 <template>
   <!-- Fallback state protects route from unknown topic ids. -->
   <section class="page">
+    <article v-if="isLoadingTopics" class="detail-card">
+      <h3>Loading Topic...</h3>
+      <p>Please wait while we fetch the latest topic data.</p>
+    </article>
+
     <template v-if="topic">
       <div class="page__hero">
         <p class="eyebrow">Topic Details</p>

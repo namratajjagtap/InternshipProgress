@@ -1,5 +1,4 @@
 import { computed, ref } from 'vue'
-import { topics as defaultTopics } from '../data/content'
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
 const topicsState = ref([])
@@ -35,12 +34,21 @@ function normalizeTopic(topic, fallbackDay) {
   }
 }
 
-async function fetchRemoteTopics() {
+function getTopicsEndpoint() {
   if (!API_BASE_URL) {
+    return ''
+  }
+
+  return API_BASE_URL.endsWith('/topics') ? API_BASE_URL : `${API_BASE_URL}/topics`
+}
+
+async function fetchRemoteTopics() {
+  const endpoint = getTopicsEndpoint()
+  if (!endpoint) {
     return []
   }
 
-  const response = await fetch(`${API_BASE_URL}/topics`, {
+  const response = await fetch(endpoint, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -56,14 +64,13 @@ async function fetchRemoteTopics() {
 }
 
 async function hydrateTopics() {
-  if (initialized && topicsState.value.length) {
+  if (initialized) {
     return
   }
 
-  const baseTopics = defaultTopics.map((topic) => ({ ...topic }))
-  topicsState.value = baseTopics
-
   if (typeof window === 'undefined' || !API_BASE_URL) {
+    topicsState.value = []
+    loadErrorState.value = API_BASE_URL ? '' : 'VITE_API_BASE_URL is not configured'
     initialized = true
     return
   }
@@ -73,18 +80,10 @@ async function hydrateTopics() {
 
   try {
     const remoteTopics = await fetchRemoteTopics()
-    const merged = [...baseTopics]
-
-    remoteTopics.forEach((topic) => {
-      if (!merged.some((item) => item.id === topic.id)) {
-        merged.push(topic)
-      }
-    })
-
-    topicsState.value = merged.map((topic, index) => normalizeTopic(topic, index + 1))
+    topicsState.value = remoteTopics.map((topic, index) => normalizeTopic(topic, index + 1))
   } catch (error) {
     loadErrorState.value = error instanceof Error ? error.message : 'Failed to load topics'
-    topicsState.value = baseTopics
+    topicsState.value = []
   } finally {
     isLoadingState.value = false
     initialized = true
@@ -100,11 +99,12 @@ function ensureLoaded() {
 }
 
 async function createRemoteTopic(payload) {
-  if (!API_BASE_URL) {
+  const endpoint = getTopicsEndpoint()
+  if (!endpoint) {
     throw new Error('VITE_API_BASE_URL is not configured')
   }
 
-  const response = await fetch(`${API_BASE_URL}/topics`, {
+  const response = await fetch(endpoint, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

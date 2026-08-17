@@ -1,6 +1,7 @@
 <script setup>
 // Home page summarizes internship progress and acts as landing overview.
 import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 import BaseButton from '../components/BaseButton.vue'
 import InfoCard from '../components/InfoCard.vue'
 import { internshipMeta } from '../data/content'
@@ -19,6 +20,7 @@ const recentTopics = computed(() => topics.value.slice(-3).reverse())
       <p>{{ internshipMeta.summary }}</p>
       <div class="page__actions">
         <BaseButton label="View Progress Snapshot" variant="primary" />
+        <RouterLink class="btn btn--secondary" to="/add-topic">Add Topic</RouterLink>
       </div>
     </div>
 

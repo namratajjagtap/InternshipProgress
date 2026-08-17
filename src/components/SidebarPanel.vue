@@ -24,9 +24,10 @@ defineProps({
       v-for="topic in topics"
       :key="topic.id"
       class="side-nav__topic"
-      :to="`/topic/${topic.id}`"
+      :to="`/${topic.id}`"
     >
       {{ topic.title }}
     </RouterLink>
+    <p v-if="topics.length === 0" class="side-nav__empty">No topics yet. Add your first one.</p>
   </nav>
 </template>

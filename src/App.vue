@@ -18,7 +18,7 @@ const pageTitle = computed(() => {
     '/add-topic': 'Add Topic'
   }
 
-  if (route.path.startsWith('/topic/')) {
+  if (route.name === 'topic-detail') {
     return 'Topic Details'
   }
 

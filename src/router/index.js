@@ -15,8 +15,8 @@ const routes = [
   { path: '/trainings', name: 'trainings', component: TrainingsView },
   // Form page for creating new topic entries.
   { path: '/add-topic', name: 'add-topic', component: AddTopicView },
-  // Detail page loaded from sidebar topic selection.
-  { path: '/topic/:id', name: 'topic-detail', component: TopicDetailView }
+  // Detail page loaded from sidebar topic selection using clean topic title paths.
+  { path: '/:id', name: 'topic-detail', component: TopicDetailView }
 ]
 
 const router = createRouter({

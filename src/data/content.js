@@ -7,7 +7,7 @@ export const internshipMeta = {
     'A practical journey through web fundamentals, team workflows, and feature delivery using Vue.js.'
 }
 
-// Topics are shown in the sidebar and used by /topic/:id route.
+// Topics are shown in the sidebar and used by /:id clean topic routes.
 export const topics = [
   {
     id: 'html-basics',

@@ -15,6 +15,7 @@ const form = reactive({
 })
 
 const errorMessage = ref('')
+const successMessage = ref('')
 const isSubmitting = ref(false)
 
 function resetForm() {
@@ -32,6 +33,7 @@ async function submitTopic() {
 
   if (!form.title.trim() || !form.category.trim() || !form.outcome.trim() || highlights.length === 0) {
     errorMessage.value = 'Please fill title, category, outcome, and at least one highlight.'
+    successMessage.value = ''
     return
   }
 
@@ -46,9 +48,13 @@ async function submitTopic() {
     })
 
     errorMessage.value = ''
+    successMessage.value = 'Topic added successfully. Opening topic details...'
     resetForm()
-    router.push(`/topic/${createdTopic.id}`)
+    setTimeout(() => {
+      router.push(`/${createdTopic.id}`)
+    }, 800)
   } catch (error) {
+    successMessage.value = ''
     errorMessage.value = error instanceof Error ? error.message : 'Failed to save topic.'
   } finally {
     isSubmitting.value = false
@@ -95,6 +101,7 @@ async function submitTopic() {
         </label>
 
         <p v-if="errorMessage" class="topic-form__error">{{ errorMessage }}</p>
+        <p v-if="successMessage" class="topic-form__success">{{ successMessage }}</p>
 
         <div class="page__actions">
           <BaseButton label="Save Topic" variant="primary" />
