@@ -6,6 +6,10 @@ defineProps({
   topics: {
     type: Array,
     required: true
+  },
+  topicsLoadError: {
+    type: String,
+    default: ''
   }
 })
 </script>
@@ -28,6 +32,7 @@ defineProps({
     >
       {{ topic.title }}
     </RouterLink>
-    <p v-if="topics.length === 0" class="side-nav__empty">No topics yet. Add your first one.</p>
+    <p v-if="topicsLoadError" class="side-nav__error">{{ topicsLoadError }}</p>
+    <p v-else-if="topics.length === 0" class="side-nav__empty">No topics yet. Add your first one.</p>
   </nav>
 </template>

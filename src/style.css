@@ -153,6 +153,13 @@ body {
   font-size: 0.9rem;
 }
 
+.side-nav__error {
+  margin: 0.4rem 0 0;
+  color: #ab1f1f;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .side-nav__link:hover,
 .side-nav__topic:hover,
 .side-nav__link.router-link-active,
@@ -228,6 +235,19 @@ body {
 .btn--secondary {
   background: var(--white);
   color: var(--ocean-700);
+}
+
+.btn--danger {
+  background: #b42318;
+  color: var(--white);
+  border-color: #b42318;
+  box-shadow: 0 8px 20px rgba(180, 35, 24, 0.24);
+}
+
+.btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .card-grid {

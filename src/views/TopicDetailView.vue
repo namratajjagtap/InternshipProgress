@@ -1,19 +1,44 @@
 <script setup>
 // Dynamic topic page resolves details from route param and shared topic data.
-import { computed, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { RouterLink } from 'vue-router'
 import BaseButton from '../components/BaseButton.vue'
 import { useTopics } from '../composables/useTopics'
 
 const route = useRoute()
-const { topics, isLoadingTopics, ensureLoaded } = useTopics()
+const router = useRouter()
+const { topics, isLoadingTopics, ensureLoaded, deleteTopic } = useTopics()
+const deleteError = ref('')
+const isDeleting = ref(false)
 
 const topic = computed(() => topics.value.find((item) => item.id === route.params.id))
 
 onMounted(() => {
   ensureLoaded()
 })
+
+async function handleDeleteTopic() {
+  if (!topic.value) {
+    return
+  }
+
+  const confirmed = window.confirm(`Delete topic "${topic.value.title}"?`)
+  if (!confirmed) {
+    return
+  }
+
+  try {
+    isDeleting.value = true
+    deleteError.value = ''
+    await deleteTopic(topic.value.id)
+    router.push('/')
+  } catch (error) {
+    deleteError.value = error instanceof Error ? error.message : 'Failed to delete topic.'
+  } finally {
+    isDeleting.value = false
+  }
+}
 </script>
 
 <template>
@@ -31,7 +56,14 @@ onMounted(() => {
         <p>{{ topic.category }} • Day {{ topic.day }}</p>
         <div class="page__actions">
           <BaseButton label="Mark as Reviewed" variant="secondary" />
+          <BaseButton
+            :label="isDeleting ? 'Deleting...' : 'Delete Topic'"
+            variant="danger"
+            :disabled="isDeleting"
+            @click="handleDeleteTopic"
+          />
         </div>
+        <p v-if="deleteError" class="topic-form__error">{{ deleteError }}</p>
       </div>
 
       <article class="detail-card">

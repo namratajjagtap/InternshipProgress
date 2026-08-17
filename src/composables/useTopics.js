@@ -1,6 +1,7 @@
 import { computed, ref } from 'vue'
 
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
+const DEFAULT_API_BASE_URL = 'https://14vstcuv5i.execute-api.ap-south-1.amazonaws.com'
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE_URL).replace(/\/$/, '')
 const topicsState = ref([])
 const isLoadingState = ref(false)
 const loadErrorState = ref('')
@@ -49,10 +50,7 @@ async function fetchRemoteTopics() {
   }
 
   const response = await fetch(endpoint, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    }
+    method: 'GET'
   })
 
   if (!response.ok) {
@@ -104,19 +102,68 @@ async function createRemoteTopic(payload) {
     throw new Error('VITE_API_BASE_URL is not configured')
   }
 
-  const response = await fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(payload)
-  })
+  let response
+
+  try {
+    response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+  } catch {
+    throw new Error('Network/CORS error while calling topics API. Check API Gateway CORS origins and methods.')
+  }
 
   if (!response.ok) {
-    throw new Error(`Failed to create topic (${response.status})`)
+    let errorMessage = `Failed to create topic (${response.status})`
+
+    try {
+      const errorPayload = await response.json()
+      if (errorPayload?.message) {
+        errorMessage = errorPayload.message
+      }
+    } catch {
+      // Keep the fallback error message when response isn't JSON.
+    }
+
+    throw new Error(errorMessage)
   }
 
   return response.json()
+}
+
+async function deleteRemoteTopic(topicId) {
+  const endpoint = getTopicsEndpoint()
+  if (!endpoint) {
+    throw new Error('VITE_API_BASE_URL is not configured')
+  }
+
+  let response
+
+  try {
+    response = await fetch(`${endpoint}/${encodeURIComponent(topicId)}`, {
+      method: 'DELETE'
+    })
+  } catch {
+    throw new Error('Network/CORS error while deleting topic. Check API Gateway CORS origins and methods.')
+  }
+
+  if (!response.ok) {
+    let errorMessage = `Failed to delete topic (${response.status})`
+
+    try {
+      const errorPayload = await response.json()
+      if (errorPayload?.message) {
+        errorMessage = errorPayload.message
+      }
+    } catch {
+      // Keep the fallback error message when response isn't JSON.
+    }
+
+    throw new Error(errorMessage)
+  }
 }
 
 export function useTopics() {
@@ -161,13 +208,20 @@ export function useTopics() {
     await ensureLoaded()
   }
 
+  async function deleteTopic(topicId) {
+    await ensureLoaded()
+    await deleteRemoteTopic(topicId)
+    topicsState.value = topicsState.value.filter((topic) => topic.id !== topicId)
+  }
+
   return {
     topics,
     isLoadingTopics: computed(() => isLoadingState.value),
     topicsLoadError: computed(() => loadErrorState.value),
     ensureLoaded,
     reloadTopics,
-    addTopic
+    addTopic,
+    deleteTopic
   }
 }
 

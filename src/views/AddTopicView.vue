@@ -104,7 +104,7 @@ async function submitTopic() {
         <p v-if="successMessage" class="topic-form__success">{{ successMessage }}</p>
 
         <div class="page__actions">
-          <BaseButton label="Save Topic" variant="primary" />
+          <BaseButton label="Save Topic" variant="primary" button-type="submit" />
           <p v-if="isSubmitting" class="topic-form__saving">Saving topic...</p>
         </div>
       </form>

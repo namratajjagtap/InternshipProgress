@@ -8,7 +8,7 @@ import { useTopics } from './composables/useTopics'
 
 const route = useRoute()
 const isSidebarOpen = ref(true)
-const { topics } = useTopics()
+const { topics, topicsLoadError } = useTopics()
 
 const pageTitle = computed(() => {
   const routeTitleMap = {
@@ -41,7 +41,7 @@ function toggleSidebar() {
 
     <div class="app-shell__content">
       <aside class="app-shell__sidebar" :class="{ 'app-shell__sidebar--hidden': !isSidebarOpen }">
-        <SidebarPanel :topics="topics" />
+        <SidebarPanel :topics="topics" :topics-load-error="topicsLoadError" />
       </aside>
 
       <main class="app-shell__main">
