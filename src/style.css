@@ -262,6 +262,55 @@ body {
   color: var(--text);
 }
 
+.topic-form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.topic-form__field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.topic-form__field span {
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.topic-form__field input,
+.topic-form__field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.62rem 0.72rem;
+  font: inherit;
+  color: var(--text);
+  background: var(--white);
+}
+
+.topic-form__field textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.topic-form__field input:focus,
+.topic-form__field textarea:focus {
+  outline: 2px solid var(--ocean-200);
+  outline-offset: 1px;
+}
+
+.topic-form__error {
+  margin: 0;
+  color: #ab1f1f;
+  font-weight: 600;
+}
+
+.topic-form__saving {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  font-weight: 600;
+}
+
 @keyframes enter-up {
   from {
     opacity: 0;

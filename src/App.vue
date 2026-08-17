@@ -4,16 +4,18 @@ import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import TopNavbar from './components/TopNavbar.vue'
 import SidebarPanel from './components/SidebarPanel.vue'
-import { topics } from './data/content'
+import { useTopics } from './composables/useTopics'
 
 const route = useRoute()
 const isSidebarOpen = ref(true)
+const { topics } = useTopics()
 
 const pageTitle = computed(() => {
   const routeTitleMap = {
     '/': 'Home',
     '/about': 'About Me',
-    '/trainings': 'Trainings'
+    '/trainings': 'Trainings',
+    '/add-topic': 'Add Topic'
   }
 
   if (route.path.startsWith('/topic/')) {

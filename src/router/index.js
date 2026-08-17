@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import TrainingsView from '../views/TrainingsView.vue'
 import TopicDetailView from '../views/TopicDetailView.vue'
+import AddTopicView from '../views/AddTopicView.vue'
 
 const routes = [
   // Overview page with summary and one primary call-to-action.
@@ -12,6 +13,8 @@ const routes = [
   { path: '/about', name: 'about', component: AboutView },
   // Training sessions and key takeaways.
   { path: '/trainings', name: 'trainings', component: TrainingsView },
+  // Form page for creating new topic entries.
+  { path: '/add-topic', name: 'add-topic', component: AddTopicView },
   // Detail page loaded from sidebar topic selection.
   { path: '/topic/:id', name: 'topic-detail', component: TopicDetailView }
 ]

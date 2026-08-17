@@ -17,6 +17,7 @@ defineProps({
     <RouterLink class="side-nav__link" to="/">Home</RouterLink>
     <RouterLink class="side-nav__link" to="/about">About Me</RouterLink>
     <RouterLink class="side-nav__link" to="/trainings">Trainings</RouterLink>
+    <RouterLink class="side-nav__link" to="/add-topic">Add Topic</RouterLink>
 
     <p class="side-nav__heading side-nav__heading--topics">Learning Topics</p>
     <RouterLink

@@ -1,10 +1,13 @@
 <script setup>
 // Home page summarizes internship progress and acts as landing overview.
+import { computed } from 'vue'
 import BaseButton from '../components/BaseButton.vue'
 import InfoCard from '../components/InfoCard.vue'
-import { internshipMeta, topics } from '../data/content'
+import { internshipMeta } from '../data/content'
+import { useTopics } from '../composables/useTopics'
 
-const recentTopics = topics.slice(0, 3)
+const { topics } = useTopics()
+const recentTopics = computed(() => topics.value.slice(-3).reverse())
 </script>
 
 <template>

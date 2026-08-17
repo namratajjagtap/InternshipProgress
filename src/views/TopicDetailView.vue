@@ -2,12 +2,14 @@
 // Dynamic topic page resolves details from route param and shared topic data.
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import BaseButton from '../components/BaseButton.vue'
-import { topics } from '../data/content'
+import { useTopics } from '../composables/useTopics'
 
 const route = useRoute()
+const { topics } = useTopics()
 
-const topic = computed(() => topics.find((item) => item.id === route.params.id))
+const topic = computed(() => topics.value.find((item) => item.id === route.params.id))
 </script>
 
 <template>
@@ -37,7 +39,7 @@ const topic = computed(() => topics.find((item) => item.id === route.params.id))
     <article v-else class="detail-card">
       <h3>Topic Not Found</h3>
       <p>The selected topic does not exist in the current dataset.</p>
-      <BaseButton label="Back to Learning Topics" variant="secondary" />
+      <RouterLink class="side-nav__link" to="/add-topic">Add a New Topic</RouterLink>
     </article>
   </section>
 </template>

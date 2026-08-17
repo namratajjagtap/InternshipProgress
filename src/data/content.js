@@ -1,9 +1,8 @@
 // Single source of structured content for topics and trainings.
 export const internshipMeta = {
   title: 'Internship Learning Portfolio',
-  internName: 'Your Name',
-  role: 'Frontend Intern',
-  daysCompleted: 48,
+  internName: 'Namrata Jagtap',
+  role: 'Apprentice',
   summary:
     'A practical journey through web fundamentals, team workflows, and feature delivery using Vue.js.'
 }
