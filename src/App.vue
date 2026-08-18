@@ -15,6 +15,7 @@ const pageTitle = computed(() => {
     '/': 'Home',
     '/about': 'About Me',
     '/trainings': 'Trainings',
+    '/learning-topics': 'Learning Topics',
     '/add-topic': 'Add Topic'
   }
 

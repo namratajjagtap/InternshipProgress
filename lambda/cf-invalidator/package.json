@@ -1,9 +1,0 @@
-{
-  "name": "cf-invalidator",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "dependencies": {
-    "@aws-sdk/client-cloudfront": "^3.896.0"
-  }
-}

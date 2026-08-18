@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import TrainingsView from '../views/TrainingsView.vue'
+import LearningTopicsView from '../views/LearningTopicsView.vue'
 import TopicDetailView from '../views/TopicDetailView.vue'
 import AddTopicView from '../views/AddTopicView.vue'
 
@@ -13,6 +14,8 @@ const routes = [
   { path: '/about', name: 'about', component: AboutView },
   // Training sessions and key takeaways.
   { path: '/trainings', name: 'trainings', component: TrainingsView },
+  // Learning topic overview page with the add-topic action.
+  { path: '/learning-topics', name: 'learning-topics', component: LearningTopicsView },
   // Form page for creating new topic entries.
   { path: '/add-topic', name: 'add-topic', component: AddTopicView },
   // Detail page loaded from sidebar topic selection using clean topic title paths.

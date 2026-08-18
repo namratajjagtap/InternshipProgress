@@ -20,7 +20,6 @@ const recentTopics = computed(() => topics.value.slice(-3).reverse())
       <p>{{ internshipMeta.summary }}</p>
       <div class="page__actions">
         <BaseButton label="View Progress Snapshot" variant="primary" />
-        <RouterLink class="btn btn--secondary" to="/add-topic">Add Topic</RouterLink>
       </div>
     </div>
 

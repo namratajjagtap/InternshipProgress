@@ -143,7 +143,7 @@ async function deleteRemoteTopic(topicId) {
   let response
 
   try {
-    response = await fetch(`${endpoint}/${encodeURIComponent(topicId)}`, {
+    response = await fetch(`https://14vstcuv5i.execute-api.ap-south-1.amazonaws.com/topics/${encodeURIComponent(topicId)}`, {
       method: 'DELETE'
     })
   } catch {
@@ -211,7 +211,13 @@ export function useTopics() {
   async function deleteTopic(topicId) {
     await ensureLoaded()
     await deleteRemoteTopic(topicId)
-    topicsState.value = topicsState.value.filter((topic) => topic.id !== topicId)
+
+    // Re-fetch from API so UI reflects persistent backend state, not just optimistic local state.
+    await reloadTopics()
+
+    if (topicsState.value.some((topic) => topic.id === topicId)) {
+      throw new Error('Topic was not removed from DynamoDB. Check DELETE route integration and Lambda permissions.')
+    }
   }
 
   return {

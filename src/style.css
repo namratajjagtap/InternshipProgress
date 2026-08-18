@@ -256,6 +256,29 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
 }
 
+.topic-preview__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.8rem 0 1rem;
+}
+
+.topic-preview__tags span {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.3rem 0.55rem;
+  background: var(--ocean-100);
+  color: var(--ocean-700);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.empty-state {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  font-weight: 600;
+}
+
 .card-grid--two {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
